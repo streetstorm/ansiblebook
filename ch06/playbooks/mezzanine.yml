@@ -11,10 +11,17 @@
     settings_path: "{{ proj_path }}/{{ proj_name }}"
     reqs_path: requirements.txt
     manage: "{{ python }} {{ proj_path }}/manage.py"
+<<<<<<< HEAD
     live_hostname: 84.252.129.251.nip.io
     domains:
       - 84.252.129.251.nip.io
       - www.84.252.129.251.nip.io
+=======
+    live_hostname: 192.168.33.10.xip.io
+    domains:
+      - 192.168.33.10.xip.io
+      - www.192.168.33.10.xip.io
+>>>>>>> 355320f7478c490fafb9924599fda287e26e38ca
     repo_url: git@github.com:ansiblebook/mezzanine_example.git
     locale: en_US.UTF-8
     # Variables below don't appear in Mezannine's fabfile.py
@@ -81,7 +88,6 @@
         password: "{{ db_pass }}"
       become: True
       become_user: postgres
-
     - name: create the database
       postgresql_db:
         name: "{{ database_name }}"
@@ -92,7 +98,6 @@
         template: template0
       become: True
       become_user: postgres
-
     - name: ensure config path exists
       file: path={{ conf_path }} state=directory
       become: True
@@ -105,17 +110,14 @@
       become: True
       when: tls_enabled
       notify: restart nginx
-
     - name: remove the default nginx config file
       file: path=/etc/nginx/sites-enabled/default state=absent
       notify: restart nginx
       become: True
-
     - name: set the nginx config file
       template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/mezzanine.conf
       notify: restart nginx
       become: True
-
     - name: enable the nginx config file
       file:
         src: /etc/nginx/sites-available/mezzanine.conf
@@ -164,7 +166,6 @@
       with_items:
         - migrate
         - collectstatic
-
     - name: set the site id
       script: scripts/setsite.py
       environment:
@@ -172,7 +173,6 @@
         PROJECT_DIR: "{{ proj_path }}"
         PROJECT_APP: "{{ proj_app }}"
         WEBSITE_DOMAIN: "{{ live_hostname }}"
-
     - name: set the admin password
       script: scripts/setadmin.py
       environment:
