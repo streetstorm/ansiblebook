@@ -15,7 +15,7 @@
     domains:
       - 84.252.129.251.nip.io
       - www.84.252.129.251.nip.io
-    repo_url: git@github.com:ansiblebook/mezzanine_example.git
+    repo_url: git@github.com:streetstorm/mezzanine_example.git
     locale: en_US.UTF-8
     # Variables below don't appear in Mezannine's fabfile.py
     # but I've added them for convenience
