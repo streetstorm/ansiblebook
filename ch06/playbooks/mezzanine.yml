@@ -11,17 +11,10 @@
     settings_path: "{{ proj_path }}/{{ proj_name }}"
     reqs_path: requirements.txt
     manage: "{{ python }} {{ proj_path }}/manage.py"
-<<<<<<< HEAD
     live_hostname: 84.252.129.251.nip.io
     domains:
       - 84.252.129.251.nip.io
       - www.84.252.129.251.nip.io
-=======
-    live_hostname: 192.168.33.10.xip.io
-    domains:
-      - 192.168.33.10.xip.io
-      - www.192.168.33.10.xip.io
->>>>>>> 355320f7478c490fafb9924599fda287e26e38ca
     repo_url: git@github.com:ansiblebook/mezzanine_example.git
     locale: en_US.UTF-8
     # Variables below don't appear in Mezannine's fabfile.py
@@ -67,8 +60,8 @@
         path: "{{ ansible_env.HOME }}/logs"
         state: directory
 
-    # - name: check out the repository on the host
-    #   git: repo={{ repo_url }} dest={{ proj_path }} accept_hostkey=yes
+    - name: check out the repository on the host
+      git: repo={{ repo_url }} dest={{ proj_path }} accept_hostkey=yes
 
     - name: install Python requirements globally via pip
       pip: 
