@@ -1,0 +1,2 @@
+db ansible_host=62.84.117.240 ansible_python_interpreter=/usr/bin/python3
+web ansible_host=62.84.116.250 ansible_python_interpreter=/usr/bin/python3

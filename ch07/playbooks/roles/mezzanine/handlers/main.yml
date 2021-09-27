@@ -1,4 +1,7 @@
 ---
+- name: reload supervisor conf
+  supervisorctl: "name=gunicorn_mezzanine state=present"
+  become: True
 - name: restart supervisor
   supervisorctl: name=gunicorn_mezzanine state=restarted
   become: True

@@ -81,6 +81,7 @@
         password: "{{ db_pass }}"
       become: True
       become_user: postgres
+
     - name: create the database
       postgresql_db:
         name: "{{ database_name }}"
@@ -91,9 +92,11 @@
         template: template0
       become: True
       become_user: postgres
+
     - name: ensure config path exists
       file: path={{ conf_path }} state=directory
       become: True
+
     - name: create tls certificates
       command: >
         openssl req -new -x509 -nodes -out {{ proj_name }}.crt
@@ -103,14 +106,17 @@
       become: True
       when: tls_enabled
       notify: restart nginx
+
     - name: remove the default nginx config file
       file: path=/etc/nginx/sites-enabled/default state=absent
       notify: restart nginx
       become: True
+
     - name: set the nginx config file
       template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/mezzanine.conf
       notify: restart nginx
       become: True
+
     - name: enable the nginx config file
       file:
         src: /etc/nginx/sites-available/mezzanine.conf
@@ -159,6 +165,7 @@
       with_items:
         - migrate
         - collectstatic
+
     - name: set the site id
       script: scripts/setsite.py
       environment:
@@ -166,6 +173,7 @@
         PROJECT_DIR: "{{ proj_path }}"
         PROJECT_APP: "{{ proj_app }}"
         WEBSITE_DOMAIN: "{{ live_hostname }}"
+        
     - name: set the admin password
       script: scripts/setadmin.py
       environment:
@@ -177,6 +185,7 @@
   handlers:
     - name: reload supervisor conf
       supervisorctl: "name={{ gunicorn_procname }} state=present"
+      become: True
     - name: restart supervisor
       supervisorctl: "name={{ gunicorn_procname }} state=restarted"
       become: True
